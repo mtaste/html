@@ -1,0 +1,10 @@
+.orgList {
+	font-size: 16px;
+	padding: 12px;
+	border-bottom: 1px solid #D5D5D5;
+}
+
+.selected {
+	background-color: #0275d8;
+	color: #ffffff;
+}

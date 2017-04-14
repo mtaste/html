@@ -1,0 +1,75 @@
+<div class="ui-g">
+	<p-growl [value]="msgs" [life]="1000"></p-growl>
+	<p-confirmDialog icon="fa fa-question-circle" width="360"></p-confirmDialog>
+	<!--机构列表-->
+	<div class="ui-g-12 ui-md-6 ui-lg-6">
+		<div class="card card-w-title">
+			<!--end-->
+			<div class="ui-listbox-filter-container ui-g">
+				<div class="ui-g-12 ui-md-6 ui-lg-6">
+					<input pInputText type="text" [(ngModel)]="keyword" placeholder="关键字" class="ui-inputtext ui-widget ui-state-default ui-corner-all" />
+					<button pButton type="button" (click)="SearchOrg()" icon="fa-search"></button>
+				</div>
+			</div>
+			<!--function-->
+			<p-menubar [model]="orgItems"></p-menubar>
+			<p-dataList [value]="orgList" [paginator]="true" [rows]="9" [lazy]="true" (onLazyLoad)="LoadOrgListData($event)" [totalRecords]="totalRecords">
+				<template let-e pTemplate="item">
+					<div class="ui-grid ui-grid-responsive ui-fluid orgList" (click)="OrgClick(e)" [ngClass]="{'selected':e.id==selectedOrg.id}">
+						{{e.name}}({{e.flag}})
+					</div>
+				</template>
+			</p-dataList>
+		</div>
+	</div>
+	<!--权限信息-->
+	<div class="ui-g-12 ui-md-6 ui-lg-6">
+		<div class="card card-w-title">
+			<div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
+				<!--function-->
+				<!--end-->
+				<p-tree [value]="trees" selectionMode="checkbox" [(selection)]="selectedNodes" (onNodeSelect)="NodeSelect($event)">
+					<template let-node pTemplate="default">
+						<span>{{node.name}}</span>
+					</template>
+				</p-tree>
+				<div class="ui-grid-row"></div>
+				<div class="ui-grid-row" *ngIf="saveFunc.name">
+					<button pButton type="button" label="{{saveFunc.name}}" (click)="SaveAuth()"></button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--  新增加机构  -->
+	<p-dialog header="新增机构" [(visible)]="display" modal="modal" width="360" responsive="true">
+		<form [formGroup]="orgForm" (ngSubmit)="onSubmit(orgForm.value)">
+			<div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
+				<input pInputText type="hidden" formControlName="id" />
+				<div class="ui-grid-row">
+					<div class="ui-grid-col-4">
+						机构名称<span style="color: red;">*</span>
+					</div>
+					<div class="ui-grid-col-8">
+						<input pInputText type="text" formControlName="name" placeholder="Required" />
+					</div>
+				</div>
+				<div class="ui-grid-row">
+					<div class="ui-grid-col-4">
+						机构标示<span style="color: red;">*</span>
+					</div>
+					<div class="ui-grid-col-8">
+						<input pInputText type="text" formControlName="flag" placeholder="Required" />
+					</div>
+				</div>
+				<div class="ui-grid-row">
+					<div class="ui-grid-col-2"></div>
+					<div class="ui-grid-col-6">
+						<button pButton type="submit" label="提交" [disabled]="!orgForm.valid"></button>
+					</div>
+					<div class="ui-grid-col-4"></div>
+				</div>
+			</div>
+		</form>
+	</p-dialog>
+
+</div>

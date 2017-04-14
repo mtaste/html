@@ -1,0 +1,16 @@
+<p-dialog header="选择" [(visible)]="display" modal="modal" width="360" responsive="true">
+	<div class="ui-listbox-filter-container ui-g">
+		<div class="ui-g-12 ui-md-12 ui-lg-12">
+			<input pInputText type="text" [(ngModel)]="keyword" placeholder="关键字" />
+			<button pButton type="button" (click)="SearchChooseList()" icon="fa-search"></button>
+		</div>
+	</div>
+	<p-dataTable [responsive]="true" [value]="chooseList" [(selection)]="chooseObjs" [lazy]="true" [rows]="rows || 10" [paginator]="true" [totalRecords]="chooseTotal" (onLazyLoad)="LoadChooseData($event)">
+		<p-column [style]="{'width':'38px'}" selectionMode="multiple"></p-column>
+		<p-column *ngFor="let el of chooseModel" field="{{el.field}}" header="{{el.header}}"></p-column>
+	</p-dataTable>
+	<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+		<button (click)="display=false" type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-left"><span class="ui-button-icon-left ui-c fa fa-fw fa-close"></span><span class="ui-button-text ui-c">No</span></button>
+		<button (click)="ChooseYes()" type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-left"><span class="ui-button-icon-left ui-c fa fa-fw fa-check"></span><span class="ui-button-text ui-c">Yes</span></button>
+	</div>
+</p-dialog>

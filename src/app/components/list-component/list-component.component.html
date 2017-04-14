@@ -1,0 +1,22 @@
+<!--列表-->
+<div>
+	<!--搜索-->
+	<div class="ui-listbox-filter-container ui-g">
+		<div class="ui-g-12 ui-md-6 ui-lg-6" *ngIf='status&&status.length>0'>
+			<p-selectButton [options]="status" [(ngModel)]="selectedStatus" (click)="StatusClick()"></p-selectButton>
+		</div>
+		<div class="ui-g-12 ui-md-6 ui-lg-6">
+			<input pInputText type="text" [(ngModel)]="keyword" placeholder="关键字" />
+			<button pButton type="button" (click)="Search()" icon="fa-search"></button>
+		</div>
+	</div>
+	<div class="card" [ngClass]="{'is-hidden':!judge(menus)}">
+		<app-auth-funcs #funcObj [menus]='menus' [obj]='obj' (initEvent)='InitFuncs($event)'></app-auth-funcs>
+	</div>
+	<!--列表-->
+	<div class="card card-w-title">
+		<p-dataTable [responsive]="true" [value]="listData" (onRowSelect)='RowSelect($event)' [(selection)]="selectedObj" selectionMode="single" [lazy]="true" [rows]="10" [paginator]="true" [totalRecords]="totals" (onLazyLoad)="LoadData($event)">
+			<p-column *ngFor="let el of list.model" field="{{el.field}}" header="{{el.header}}"></p-column>
+		</p-dataTable>
+	</div>
+</div>

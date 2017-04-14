@@ -1,0 +1,101 @@
+<p-growl [value]="msgs" [life]="1000">
+</p-growl>
+<!--列表-->
+<div class="ui-g" [ngClass]="{'is-hidden':step!=1}">
+	<div class="ui-g-12 ui-md-12 ui-lg-12">
+		<app-list-component #listObj [title]='"产资处理"' [menus]='menus' [list]='listModel' [obj]='menuObj' (selectEvent)='SelectedRow($event)'>
+		</app-list-component>
+	</div>
+</div>
+<div class="ui-g" [ngClass]="{'is-hidden':step<2}">
+	<div class="ui-g-12 ui-md-12 ui-lg-12">
+		<p-fieldset legend="信息">
+			<!-- 功能-->
+			<div class="card card-w-title">
+				<p-menubar [model]="infoFuncs"></p-menubar>
+				<div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+					<div class="ui-grid-row">
+						<div class="ui-grid-col-2">
+							资产编号:
+						</div>
+						<div class="ui-grid-col-6">
+							{{listObj.selectedObj.assetNum}}
+						</div>
+					</div>
+					<div class="ui-grid-row">
+						<div class="ui-grid-col-2">
+							资产名称:
+						</div>
+						<div class="ui-grid-col-6">
+							{{listObj.selectedObj.name}}
+						</div>
+					</div>
+					<div class="ui-grid-row">
+						<div class="ui-grid-col-2">
+							可借数量:
+						</div>
+						<div class="ui-grid-col-6">
+							{{listObj.selectedObj.qty-listObj.selectedObj.loanQty}}
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="card card-w-title">
+				<!--查看-->
+				<div [ngClass]="{'is-hidden':step!=2}" class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+					<div class="ui-grid-row">
+						<p-dataTable [responsive]="true" [value]="loanData" [lazy]="true" [rows]="10" [paginator]="true" [totalRecords]="loanTotals" (onLazyLoad)="LoadLoanData($event)">
+							<p-column field="userName" header="借入用户名"></p-column>
+							<p-column field="name" header="借入姓名"></p-column>
+							<p-column field="qty" header="借入数量"></p-column>
+							<p-column field="createTime" header="借出时间"></p-column>
+							<p-column field="createUser" header="借出用户"></p-column>
+							<p-column field="updateTime" header="归还时间"></p-column>
+						</p-dataTable>
+					</div>
+				</div>
+				<!--借-->
+				<div [ngClass]="{'is-hidden':step!=3}" class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+					<div class="ui-grid-row">
+						<p-menubar [model]="funs"></p-menubar>
+					</div>
+					<div class="ui-grid-row">
+						<p-dataTable [responsive]="true" [value]="selectData" [(selection)]="selectedObjs" [editable]="true">
+							<p-column [style]="{'width':'38px'}" selectionMode="multiple"></p-column>
+							<p-column field="userName" header="用户名"></p-column>
+							<p-column field="name" header="姓名"></p-column>
+							<p-column field="qty" header="数量">
+								<template let-col let-data="rowData" pTemplate="body">
+									<input pInputText type="number" [(ngModel)]="data[col.field]" />
+								</template>
+							</p-column>
+						</p-dataTable>
+					</div>
+					<div class="ui-grid-row">
+						<button pButton type="submit" label="确定借出" (click)="submitLoad()"></button>
+					</div>
+				</div>
+				<!--归还-->
+				<div [ngClass]="{'is-hidden':step!=4}" class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid">
+					<div class="ui-grid-row">
+						<p-dataTable [responsive]="true" [value]="revertData" [lazy]="true" [rows]="10" [paginator]="true" [totalRecords]="revertTotals" (onLazyLoad)="LoadRevertData($event)">
+							<p-column field="userName" header="借入用户名"></p-column>
+							<p-column field="name" header="借入姓名"></p-column>
+							<p-column field="qty" header="借入数量"></p-column>
+							<p-column styleClass="col-button">
+								<template pTemplate="header">
+									归还操作
+								</template>
+								<template let-indx="rowIndex" pTemplate="body">
+									<button type="button" pButton (click)="RevertData(indx)" icon="fa-edit"></button>
+								</template>
+							</p-column>
+						</p-dataTable>
+					</div>
+				</div>
+			</div>
+		</p-fieldset>
+	</div>
+	<app-select-dialog #selectObj [rows]='3' [chooseModel]='chooseModel' [chooseURL]='chooseURL' (chooseEvent)='chooseEvent($event)'>
+	</app-select-dialog>
+</div>

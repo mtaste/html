@@ -1,0 +1,28 @@
+{
+	"code": 1,
+	"msg": "",
+	"data": {
+		"total": 3,
+		"rows": [
+			{
+				"id": "e92ac6d923cd4eb28be43900b9492b40",
+				"createTime": 1482741452000,
+				"remark": "",
+				"name": "总经理",
+				"ROW_ID": 1
+			}, {
+				"id": "5AEB09B761024B3CBC94A2B2A11FDD2C",
+				"createTime": 1486692339000,
+				"remark": "admin",
+				"name": "admin",
+				"ROW_ID": 2
+			}, {
+				"id": "d637d188c426484d947bd677c5ea61b4",
+				"createTime": 1482742089000,
+				"remark": "",
+				"name": "Test",
+				"ROW_ID": 3
+			}
+		]
+	}
+}

@@ -1,0 +1,13 @@
+<div style="z-index: 1000;" [ngClass]="{'is-hidden':!ct.loadingCompont}" class="ui-widget-overlay ui-dialog-mask">
+	<div class="splash-screen">
+		<div class="splash-container">
+			<div style="color: white;font-weight: bold;">s-plat.pub</div>
+			<div class="load-bar">
+				<div class="bar"></div>
+				<div class="bar"></div>
+				<div class="bar"></div>
+			</div>
+		</div>
+	</div>
+</div>
+<router-outlet></router-outlet>

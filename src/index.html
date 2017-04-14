@@ -1,0 +1,54 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>S应用工具商城System</title>
+		<base href="/">
+
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="icon" type="image/x-icon" href="favicon.ico">
+		<link rel="stylesheet" type="text/css" href="assets/css/my/cus-blue.css" />
+		<link rel="stylesheet" type="text/css" href="assets/css/my/style.css" />
+		<link rel="stylesheet" type="text/css" href="assets/css/customer.css" />
+		<link rel="stylesheet" type="text/css" href="assets/css/icons/css/font-awesome.min.css">
+	</head>
+
+	<body>
+		<app-root>
+			<div class="splash-screen">
+				<div class="splash-container">
+					<div class="logo"></div>
+					<div class="load-bar">
+						<div class="bar"></div>
+						<div class="bar"></div>
+						<div class="bar"></div>
+					</div>
+				</div>
+			</div>
+		</app-root>
+	</body>
+	<script>
+		Date.prototype.Format = function(fmt) { // author: meizz
+			var o = {
+				"M+": this.getMonth() + 1, // 月份
+				"d+": this.getDate(), // 日
+				"h+": this.getHours(), // 小时
+				"m+": this.getMinutes(), // 分
+				"s+": this.getSeconds(), // 秒
+				"q+": Math.floor((this.getMonth() + 3) / 3), // 季度
+				"S": this.getMilliseconds()
+					// 毫秒
+			};
+			if(/(y+)/.test(fmt))
+				fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "")
+					.substr(4 - RegExp.$1.length));
+			for(var k in o)
+				if(new RegExp("(" + k + ")").test(fmt))
+					fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) :
+						(("00" + o[k]).substr(("" + o[k]).length)));
+			return fmt;
+		}
+	</script>
+
+</html>

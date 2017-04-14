@@ -1,0 +1,19 @@
+<app-list-form-component 
+	[title]="listTile" 
+	[list]="listModel" 
+	[form]="form" 
+	[saveStep]='false'
+	[status]='status'
+	(initEvent)="InitListForm($event)"
+	(rowSeleted)='RowSeleted($event)'
+	(addEvent)='AddEvent($event)'>
+	
+	<app-select-list 
+		[title]="selectTile"
+		[listModel]='selectModel'
+		(initEvent)='InitSelectListEvent($event)'
+		(removeEvent)='RemoveEvent($event)'
+		(chooseEvent)='ChooseEvent($event)'
+		>
+	</app-select-list>
+</app-list-form-component>

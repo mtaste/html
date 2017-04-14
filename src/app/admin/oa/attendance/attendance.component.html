@@ -1,0 +1,14 @@
+<div class="card card-w-title">
+	<h1>当前时间：<span>{{model.nowTime | date:'y-MM-dd HH:mm:ss'}}</span></h1>
+	<h2>农历：<span>{{model.oldDate}}</span></h2>
+	<h3>上班时间：<span>{{model.beginTime | date:'HH:mm:ss'}}</span></h3>
+	<h3>下班时间：<span>{{model.endTime | date:'HH:mm:ss'}}</span></h3>
+	<span [ngClass]="{'is-hidden':model.beginTime}">
+		<button pButton (click)="SignIn()" type="button" icon="fa-check" label="签到"></button>
+	</span>
+	<span [ngClass]="{'is-hidden':!model.beginTime || model.endTime}">
+		<button pButton (click)="SignOut()" type="button" icon="fa-remove" label="签退"></button>
+	</span>
+</div>
+<app-list-component [status]='[]' [title]='"签到列表"' [list]='listModel'>
+</app-list-component>

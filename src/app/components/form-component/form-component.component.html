@@ -1,0 +1,47 @@
+<!--表单-->
+<form [formGroup]="formModel" (ngSubmit)="onSubmitEvent(formModel.value)">
+	<div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
+		<!--名称-->
+		<span *ngFor="let el of form">
+	<input *ngIf="!el.name" pInputText type="hidden" formControlName="{{el.model}}" />
+<div class="ui-grid-row" *ngIf="el.name">
+	<div [ngClass]="{'ui-grid-col-4':!(el.display ||(!el.display&&!canSave))}">
+		{{el.name}}
+		<span *ngIf='el.msg&&!(el.display ||(!el.display&&!canSave))' style="color: red;">*</span>
+		<span *ngIf="el.display ||(!el.display&&!canSave)">
+						:{{formModel.controls[el.model].value}}
+		</span>
+	</div>
+	<div *ngIf="!el.type&&!el.display" class="ui-grid-col-6" [ngClass]="{'is-hidden':!canSave}">
+		<input pInputText type="text" formControlName="{{el.model}}" />
+	</div>
+	<div *ngIf="el.type=='textarea'&&!el.display" class="ui-grid-col-6" [ngClass]="{'is-hidden':!canSave}">
+		<textarea pInputTextarea rows="5" cols="30" formControlName="{{el.model}}"></textarea>
+	</div>
+	<div *ngIf="el.type=='number'&&!el.display" class="ui-grid-col-6" [ngClass]="{'is-hidden':!canSave}">
+		<input pInputText type="number" formControlName="{{el.model}}" />
+	</div>
+	<div *ngIf="el.type=='password'&&!el.display" class="ui-grid-col-6" [ngClass]="{'is-hidden':!canSave}">
+		<input pInputText type="password" formControlName="{{el.model}}" />
+	</div>
+	<div *ngIf="el.type=='select'&&!el.display" class="ui-grid-col-6" [ngClass]="{'is-hidden':!canSave}">
+		<p-dropdown [options]="el.ele" formControlName="{{el.model}}" [autoWidth]="false"></p-dropdown>
+	</div>
+	<div class="ui-grid-col-4" *ngIf='el.msg'>
+		<div class="ui-message ui-messages-error ui-corner-all" *ngIf="!formModel.controls[el.model].valid&&formModel.controls[el.model].dirty">
+			<i class="fa fa-close"></i>{{el.msg}}
+		</div>
+	</div>
+	<div class="ui-grid-col-4" *ngIf='!el.msg'>
+	</div>
+	</div>
+	</span>
+	<div class="ui-grid-row" [ngClass]="{'is-hidden':!canSave}">
+		<div class="ui-grid-col-4"></div>
+		<div class="ui-grid-col-6">
+			<button pButton type="submit" label="保存" [disabled]="!formModel.valid"></button>
+		</div>
+		<div class="ui-grid-col-4"></div>
+	</div>
+	</div>
+</form>

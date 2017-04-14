@@ -1,0 +1,141 @@
+<p-growl [value]="msgs" [life]="1000"></p-growl>
+<p-confirmDialog icon="fa fa-question-circle" width="425"></p-confirmDialog>
+<!--用户列表-->
+<div class="ui-g" [ngClass]="{'is-hidden':step!=1}">
+	<!--用户列表-->
+	<div class="ui-g-12 ui-md-12 ui-lg-12">
+		<div class="ui-listbox-filter-container ui-g">
+			<div class="ui-g-12 ui-md-6 ui-lg-6">
+				<p-selectButton [options]="status" *ngIf='status.length>0' [(ngModel)]="selectedStatus" (click)="StatusClick()"></p-selectButton>
+			</div>
+			<div class="ui-g-12 ui-md-6 ui-lg-6">
+				<input pInputText type="text" [(ngModel)]="keyword" placeholder="关键字" />
+				<button pButton type="button" (click)="SearchUser()" icon="fa-search"></button>
+			</div>
+		</div>
+		<!-- 功能-->
+		<div class="card">
+			<p-menubar [model]="userFuncs"></p-menubar>
+		</div>
+		<!--列表-->
+		<div class="card card-w-title">
+			<p-dataTable [responsive]="true" [value]="userList" [(selection)]="selectedUser" selectionMode="single" [lazy]="true" [rows]="10" [paginator]="true" [totalRecords]="userTotals" (onLazyLoad)="LoadUserData($event)">
+				<p-column field="userName" header="用户名"></p-column>
+				<p-column field="name" header="姓名"></p-column>
+				<p-column field="mobile" header="电话"></p-column>
+				<p-column field="roleName" header="职务"></p-column>
+				<p-column field="statusText" header="状态"></p-column>
+			</p-dataTable>
+		</div>
+	</div>
+</div>
+<!--用户信息-->
+<div class="ui-g" [ngClass]="{'is-hidden':step!=2}">
+	<div class="ui-g-12 ui-md-12 ui-lg-12">
+		<p-fieldset legend="用户信息">
+			<!-- 功能-->
+			<p-menubar [model]="infoFuncs"></p-menubar>
+			<!--用户信息-->
+			<form [formGroup]="userForm" (ngSubmit)="onSubmit(userForm.value)">
+				<div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
+					<div class="ui-grid-row">
+						<!--用户名-->
+						<div class="ui-grid-col-2">
+							用户名<span style="color: red;">*</span>
+						</div>
+						<div class="ui-grid-col-6">
+							<input pInputText type="text" formControlName="userName" placeholder="Required" />
+						</div>
+						<div class="ui-grid-col-4">
+							<div class="ui-message ui-messages-error ui-corner-all" *ngIf="!userForm.controls['userName'].valid&&userForm.controls['userName'].dirty">
+								<i class="fa fa-close"></i> 用户名不能为空
+							</div>
+						</div>
+					</div>
+					<!--密码-->
+					<div class="ui-grid-row">
+						<div class="ui-grid-col-2">
+							密码<span style="color: red;">*</span>
+						</div>
+						<div class="ui-grid-col-6">
+							<input pInputText type="password" formControlName="passWord" placeholder="Required - Min(6)" />
+						</div>
+						<div class="ui-grid-col-4">
+							<div class="ui-message ui-messages-error ui-corner-all" *ngIf="!userForm.controls['passWord'].valid&&userForm.controls['passWord'].dirty">
+								<i class="fa fa-close"></i>
+								<span *ngIf="userForm.controls['passWord'].errors['required']">密码不能为空</span>
+								<span *ngIf="userForm.controls['passWord'].errors['minlength']">密码最小6位</span>
+							</div>
+						</div>
+					</div>
+
+					<!--密码-->
+					<div class="ui-grid-row">
+						<div class="ui-grid-col-2">
+							姓名<span style="color: red;">*</span>
+						</div>
+						<div class="ui-grid-col-6">
+							<input pInputText type="text" formControlName="name" placeholder="Required" />
+						</div>
+						<div class="ui-grid-col-4">
+							<div class="ui-message ui-messages-error ui-corner-all" *ngIf="!userForm.controls['name'].valid&&userForm.controls['name'].dirty">
+								<i class="fa fa-close"></i>姓名不能为空
+							</div>
+						</div>
+					</div>
+
+					<div class="ui-grid-row">
+						<div class="ui-grid-col-2">
+							电话<span style="color: red;">*</span>
+						</div>
+						<div class="ui-grid-col-6">
+							<input pInputText type="text" formControlName="mobile" placeholder="Required" />
+						</div>
+						<div class="ui-grid-col-4">
+							<div class="ui-message ui-messages-error ui-corner-all" *ngIf="!userForm.controls['mobile'].valid&&userForm.controls['mobile'].dirty">
+								<i class="fa fa-close"></i> 电话不能为空
+							</div>
+						</div>
+					</div>
+
+					<div class="ui-grid-row">
+						<div class="ui-grid-col-2">
+							状态<span style="color: red;">*</span>
+						</div>
+						<div class="ui-grid-col-6">
+							<p-dropdown [options]="statusList" formControlName="status" [autoWidth]="false"></p-dropdown>
+						</div>
+						<div class="ui-grid-col-4">
+							<div class="ui-message ui-messages-error ui-corner-all" *ngIf="!userForm.controls['status'].valid&&userForm.controls['status'].dirty">
+								<i class="fa fa-close"></i> 状态不能为空
+							</div>
+						</div>
+					</div>
+
+					<div class="ui-grid-row">
+						<div class="ui-grid-col-2">
+							用户类型<span style="color: red;">*</span>
+						</div>
+						<div class="ui-grid-col-6">
+							<p-dropdown [options]="userTypeList" formControlName="userType" [autoWidth]="false"></p-dropdown>
+						</div>
+						<div class="ui-grid-col-4">
+							<div class="ui-message ui-messages-error ui-corner-all" *ngIf="!userForm.controls['userType'].valid&&userForm.controls['userType'].dirty">
+								<i class="fa fa-close"></i> 用户类型不能为空
+							</div>
+						</div>
+					</div>
+
+					<div class="ui-grid-row">
+						<div class="ui-grid-col-2"></div>
+						<div class="ui-grid-col-6">
+							<button pButton type="submit" label="提交" [disabled]="!userForm.valid"></button>
+						</div>
+						<div class="ui-grid-col-4"></div>
+					</div>
+				</div>
+				<input pInputText type="hidden" formControlName="id" />
+			</form>
+		</p-fieldset>
+	</div>
+</div>

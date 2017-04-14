@@ -1,0 +1,39 @@
+<p-growl [value]="msgs" [life]="1000">
+</p-growl>
+<p-confirmDialog icon="fa fa-question-circle" width="425"></p-confirmDialog>
+<div class="ui-g">
+	<!--机构列表-->
+	<div class="ui-g-12 ui-md-6 ui-lg-6">
+		<p-fieldset legend="机构列表">
+			<div class="card card-w-title">
+				<!--end-->
+				<div class="ui-listbox-filter-container ui-g">
+					<div class="ui-g-12 ui-md-6 ui-lg-6">
+						<input pInputText type="text" [(ngModel)]="keyword" placeholder="关键字" />
+						<button pButton type="button" (click)="SearchOrg()" icon="fa-search"></button>
+					</div>
+				</div>
+				<p-dataList [value]="orgList" [paginator]="true" [rows]="9" [lazy]="true" (onLazyLoad)="LoadOrgListData($event)" [totalRecords]="totalRecords">
+					<template let-e pTemplate="item">
+						<div class="ui-grid ui-grid-responsive ui-fluid orgList" (click)="OrgClick(e)" [ngClass]="{'selected':e.id==selectedOrg.id}">
+							{{e.name}}({{e.flag}})
+						</div>
+					</template>
+				</p-dataList>
+			</div>
+		</p-fieldset>
+	</div>
+	<!--权限信息-->
+	<div class="ui-g-12 ui-md-6 ui-lg-6">
+		<p-fieldset legend="权限列表">
+			<div class="card card-w-title">
+				<!--end-->
+				<p-tree [value]="trees" [(selection)]="selectedNode">
+					<template let-node pTemplate="default">
+						<span>{{node.name}}</span>
+					</template>
+				</p-tree>
+			</div>
+		</p-fieldset>
+	</div>
+</div>

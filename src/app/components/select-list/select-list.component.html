@@ -1,0 +1,49 @@
+<!--信息列表-->
+<div class="ui-g">
+	<p-fieldset legend="{{title}}">
+		<!--function-->
+		<div [ngClass]="{'is-hidden':!showFuns}">
+			<p-menubar [model]="funs"></p-menubar>
+		</div>
+		<!--end-->
+		<p-dataTable [responsive]="true" [value]="listData" [(selection)]="selectedObjs" [lazy]="true" [rows]="10" [paginator]="true" [totalRecords]="totals" (onLazyLoad)="LoadData($event)" [editable]="true">
+			<p-column [style]="{'width':'38px'}" selectionMode="multiple"></p-column>
+			<p-column *ngFor="let el of listModel.listModel" field="{{el.field}}" header="{{el.header}}" [editable]='el.editable'></p-column>
+			<p-column styleClass="col-button" *ngIf='listModel.editUrl'>
+				<template pTemplate="header">
+					操作
+				</template>
+				<template let-data="rowIndex" pTemplate="body">
+					<button [ngClass]="{'is-hidden':!showFuns}" type="button" pButton (click)="EditData(data)" icon="fa-edit"></button>
+				</template>
+			</p-column>
+		</p-dataTable>
+	</p-fieldset>
+</div>
+<!--选择用户-->
+<p-dialog header="选择" [(visible)]="display" modal="modal" width="360" responsive="true">
+	<div class="ui-listbox-filter-container ui-g">
+		<div class="ui-g-12 ui-md-12 ui-lg-12">
+			<input pInputText type="text" [(ngModel)]="keyword" placeholder="关键字" />
+			<button pButton type="button" (click)="SearchChooseList()" icon="fa-search"></button>
+		</div>
+	</div>
+	<p-dataTable [responsive]="true" [value]="chooseList" [(selection)]="chooseObjs" [lazy]="true" [rows]="10" [paginator]="true" [totalRecords]="chooseTotal" (onLazyLoad)="LoadChooseData($event)">
+		<p-column [style]="{'width':'38px'}" selectionMode="multiple"></p-column>
+		<p-column *ngFor="let el of listModel.chooseModel" field="{{el.field}}" header="{{el.header}}"></p-column>
+	</p-dataTable>
+	<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+		<button (click)="display=false" type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-left"><span class="ui-button-icon-left ui-c fa fa-fw fa-close"></span><span class="ui-button-text ui-c">No</span></button>
+		<button (click)="ChooseYes()" type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-left"><span class="ui-button-icon-left ui-c fa fa-fw fa-check"></span><span class="ui-button-text ui-c">Yes</span></button>
+	</div>
+</p-dialog>
+
+<!--编辑内容-->
+<p-dialog *ngIf='listModel.editUrl' header="编辑信息"
+	 [(visible)]="editDisplay" modal="modal" width="360" responsive="true">
+	<app-form-component 
+		[form]='listModel.editForm'
+		 (save)='onSubmit($event)'
+		 (initEvent)='FormInit($event)'>
+	</app-form-component>
+</p-dialog>

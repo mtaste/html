@@ -1,0 +1,23 @@
+<div class="card card-w-title">
+	<div class="ui-g">
+		<div class="ui-g-6 ui-md-6 ui-lg-3">
+			<h3>开始时间</h3>
+			<p-calendar [(ngModel)]="model.beginTime" dateFormat="yy-mm-dd" [showIcon]="true"></p-calendar>
+		</div>
+		<div class="ui-g-6 ui-md-6 ui-lg-3">
+			<h3>结束时间</h3>
+			<p-calendar [(ngModel)]="model.endTime" dateFormat="yy-mm-dd" [showIcon]="true"></p-calendar>
+		</div>
+		<div class="ui-g-6 ui-md-6 ui-lg-3">
+			<h3>会员名</h3>
+			<input type="text" pInputText [(ngModel)]="model.userName" />
+		</div>
+		<div class="ui-g-6 ui-md-6 ui-lg-3">
+			<h3></h3>
+			<button pButton type="text" (click)="Search()" label="查询"></button>
+		</div>
+	</div>
+</div>
+<div class="card card-w-title">
+	<p-chart #child type="line" [data]="data"></p-chart>
+</div>

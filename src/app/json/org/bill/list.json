@@ -1,0 +1,22 @@
+{
+	"code": 1,
+	"msg": "",
+	"data": {
+		"total": 1,
+		"rows": [
+			{
+				"id": "e41f1b9d54544e1f82c4c7d6252ec2d4",
+				"createUser": "赵XX",
+				"address": "东莞松山湖XXX",
+				"status": "2",
+				"remark": "",
+				"authUser": "黎XX",
+				"name": "东莞市XX",
+				"orgFlag": "XX",
+				"mgType": "1",
+				"contacts": "黎XX",
+				"mobile": "13829000000"
+			}
+		]
+	}
+}

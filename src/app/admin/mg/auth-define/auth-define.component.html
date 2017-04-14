@@ -1,0 +1,131 @@
+<div class="ui-g">
+	<p-growl [value]="msgs" [life]="1000"></p-growl>
+	<p-confirmDialog icon="fa fa-question-circle" width="425"></p-confirmDialog>
+	<div class="ui-g-12 ui-md-6 ui-lg-6">
+		<div class="card card-w-title">
+			<p-menubar [model]="items"></p-menubar>
+			<p-tree [value]="trees" selectionMode="single" [(selection)]="selectedNode" (onNodeSelect)="NodeSelect($event)">
+				<template let-node pTemplate="default">
+					<span>{{node.name}}</span>
+				</template>
+			</p-tree>
+		</div>
+	</div>
+	<div class="ui-g-12 ui-md-6 ui-lg-6">
+		<div class="card card-w-title">
+			<form [formGroup]="authForm" (ngSubmit)="onSubmit(authForm.value)">
+				<div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
+					<input pInputText type="hidden" formControlName="id" />
+					<input pInputText type="hidden" formControlName="parentId" />
+					<div class="ui-grid-row">
+						<div class="ui-grid-col-2">
+							上级
+						</div>
+						<div class="ui-grid-col-6">
+							<input pInputText type="text" formControlName="parentName" />
+						</div>
+					</div>
+
+					<div class="ui-grid-row">
+						<div class="ui-grid-col-2">
+							名称<span style="color: red;">*</span>
+						</div>
+						<div class="ui-grid-col-6">
+							<input pInputText type="text" formControlName="name" placeholder="Required" />
+						</div>
+						<div class="ui-grid-col-4">
+							<div class="ui-message ui-messages-error ui-corner-all" *ngIf="!authForm.controls['name'].valid&&authForm.controls['name'].dirty">
+								<i class="fa fa-close"></i>名称不能为空
+							</div>
+						</div>
+					</div>
+
+					<div class="ui-grid-row">
+						<div class="ui-grid-col-2">
+							类型<span style="color: red;">*</span>
+						</div>
+						<div class="ui-grid-col-6">
+							<p-dropdown [options]="authTypes" formControlName="authType" [autoWidth]="false"></p-dropdown>
+						</div>
+						<div class="ui-grid-col-4">
+							<div class="ui-message ui-messages-error ui-corner-all" *ngIf="!authForm.controls['authType'].valid&&authForm.controls['authType'].dirty">
+								<i class="fa fa-close"></i>类型不能为空
+							</div>
+						</div>
+					</div>
+
+					<div class="ui-grid-row">
+						<div class="ui-grid-col-2">
+							可授权<span style="color: red;">*</span>
+						</div>
+						<div class="ui-grid-col-6">
+							<p-dropdown [options]="mgTypes" formControlName="mgType" [autoWidth]="false"></p-dropdown>
+						</div>
+						<div class="ui-grid-col-4">
+							<div class="ui-message ui-messages-error ui-corner-all" *ngIf="!authForm.controls['mgType'].valid&&authForm.controls['mgType'].dirty">
+								<i class="fa fa-close"></i>可授权不能为空
+							</div>
+						</div>
+					</div>
+
+					<div class="ui-grid-row">
+						<div class="ui-grid-col-2">
+							标示
+						</div>
+						<div class="ui-grid-col-6">
+							<input pInputText type="text" formControlName="authValue" placeholder="Required" />
+						</div>
+						<div class="ui-grid-col-4">
+
+						</div>
+					</div>
+
+					<div class="ui-grid-row">
+						<div class="ui-grid-col-2">
+							图标
+						</div>
+						<div class="ui-grid-col-6">
+							<input pInputText type="text" formControlName="authIcon" placeholder="Required" />
+						</div>
+						<div class="ui-grid-col-4">
+
+						</div>
+					</div>
+
+					<div class="ui-grid-row">
+						<div class="ui-grid-col-2">
+							访问地址
+						</div>
+						<div class="ui-grid-col-6">
+							<input pInputText type="text" formControlName="authUrl" placeholder="Required" />
+						</div>
+						<div class="ui-grid-col-4">
+
+						</div>
+					</div>
+
+					<div class="ui-grid-row">
+						<div class="ui-grid-col-2">
+							序号
+						</div>
+						<div class="ui-grid-col-6">
+							<input pInputText type="text" formControlName="seq" placeholder="Required" />
+						</div>
+						<div class="ui-grid-col-4">
+
+						</div>
+					</div>
+
+					<div class="ui-grid-row">
+						<div class="ui-grid-col-2"></div>
+						<div class="ui-grid-col-6">
+							<button pButton type="submit" label="{{saveFunc.name}}" [disabled]="!authForm.valid"></button>
+						</div>
+						<div class="ui-grid-col-4"></div>
+					</div>
+					<div style="text-align: center;font-weight:inherit;">{{display}}</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>

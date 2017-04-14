@@ -1,0 +1,60 @@
+<p-panel header="Register">
+	<form [formGroup]="userform" (ngSubmit)="onSubmit(userform.value)">
+		<div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-2">
+					UserName *:
+				</div>
+				<div class="ui-grid-col-6">
+					<input pInputText type="text" formControlName="userName" placeholder="Required" />
+				</div>
+				<div class="ui-grid-col-4">
+					<div class="ui-message ui-messages-error ui-corner-all" *ngIf="!userform.controls['userName'].valid&&userform.controls['userName'].dirty">
+						<i class="fa fa-close"></i> UserName is required
+					</div>
+				</div>
+			</div>
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-2">
+					PassWord *:
+				</div>
+				<div class="ui-grid-col-6">
+					<input pInputText type="password" formControlName="passWord" placeholder="Required - Min(6)" />
+				</div>
+				<div class="ui-grid-col-4">
+					<div class="ui-message ui-messages-error ui-corner-all" *ngIf="!userform.controls['passWord'].valid&&userform.controls['passWord'].dirty">
+						<i class="fa fa-close"></i>
+						<span *ngIf="userform.controls['passWord'].errors['required']">Password is required</span>
+						<span *ngIf="userform.controls['passWord'].errors['minlength']">Must be longer than 6 characters</span>
+					</div>
+				</div>
+			</div>
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-2">
+					Confirm PassWord *:
+				</div>
+				<div class="ui-grid-col-6">
+					<input pInputText type="password" formControlName="confirmPassWord" placeholder="Required - Min(6)" />
+				</div>
+				<div class="ui-grid-col-4">
+					<div class="ui-message ui-messages-error ui-corner-all" *ngIf="!userform.controls['confirmPassWord'].valid&&userform.controls['confirmPassWord'].dirty">
+						<i class="fa fa-close"></i>
+						<span *ngIf="userform.controls['confirmPassWord'].errors['required']">Password is required</span>
+						<span *ngIf="userform.controls['confirmPassWord'].errors['minlength']">Must be longer than 6 characters</span>
+					</div>
+				</div>
+			</div>
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-2"></div>
+				<div class="ui-grid-col-6">
+					<button pButton type="submit" label="Register" [disabled]="!userform.valid"></button>
+				</div>
+				<div class="ui-grid-col-4"></div>
+			</div>
+			<div style="text-align:center;margin-top:20px" *ngIf="submitted">
+				Form Submitted
+				<br> {{diagnostic}}
+			</div>
+		</div>
+	</form>
+</p-panel>

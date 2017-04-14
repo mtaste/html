@@ -1,0 +1,60 @@
+<!-- TOP BAR-->
+<div class="l-offset-nav l-offset-side-nav ng-scope">
+	<nav class="main-nav l-pinned-top l-layer-5">
+		<h1>
+			<a class="md-button md-ink-ripple">S平台 <sup class="ng-scope">by ken-li</sup></a>
+		</h1>
+		<button (click)="ToggleMenu($event,'showMenuNav')" class="main-nav-button main-nav-mobile-trigger l-right md-button md-ink-ripple" type="button">
+			功能<span class="icon icon-arrow-drop-down ng-scope"></span>
+		</button>
+
+		<!--
+			<button (click)="ToggleMenu($event,'showTopNav')" class="main-nav-button main-nav-mobile-trigger l-right md-button md-ink-ripple" type="button">
+			菜单<span class="icon icon-arrow-drop-down ng-scope"></span>
+		</button>
+		<ul [ngClass]="{ 'is-visible' : appCtrl.showTopNav}">
+			<li class="l-left">
+				<a class="main-nav-button md-button md-ink-ripple">Features
+					<div class="md-ripple-container"></div>
+				</a>
+			</li>
+			<li class="l-left">
+				<a class="main-nav-button md-button md-ink-ripple">Docs</a>
+			</li>
+			<li class="l-left">
+				<a class="main-nav-button md-button md-ink-ripple">Events</a>
+			</li>
+			<li class="l-left">
+				<a class="main-nav-button md-button md-ink-ripple">News</a>
+			</li>
+			<li class="l-right">
+				<a class="main-nav-button md-button md-ink-ripple">退出</a>
+			</li>
+		</ul>
+		-->
+	</nav>
+	<div class="loading l-pinned-top" [ngClass]="{'is-hidden':!ct.loadingRequest}">
+		<span></span>
+	</div>
+	<!--Menus-->
+	<nav [ngClass]="{'is-visible' : appCtrl.showMenuNav}" class="sidenav l-pinned-left l-layer-4 l-offset-nav">
+		<!-- SEARCH BAR
+		<header class="sidenav-search st-input-wrapper">
+			<button (click)="ToggleMenu($event,'showMenuNav')" class="mobile-trigger button md-button md-ink-ripple" type="button">
+				功能<span class="icon icon-arrow-drop-down ng-scope"></span>
+			</button>
+		</header>
+		<!--menus-->
+		<app-menu-component [menus]="menus" (onSelected)="MenusClick($event)" [menuId]="menuId">
+		</app-menu-component>
+	</nav>
+	<!--content 
+	<p-tabMenu [model]="items" [activeItem]="activeItem">
+	</p-tabMenu>-->
+	<p-breadcrumb [model]="crumbs" [home]='homeMenu'></p-breadcrumb>
+	<router-outlet>
+	</router-outlet>
+</div>
+<div class="ffooter">
+	{{userInfo.orgName}}
+</div>

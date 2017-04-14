@@ -1,0 +1,10 @@
+<li *ngFor="let el of menus" [ngClass]="{'active-menuitem':el.id==menuId}">
+	<a href="javascript:;" (click)="ToggleMenu(el)">
+		<i *ngIf='el.authIcon' class='{{el.authIcon}}'></i> 
+		<span>{{el.name}}</span>
+		<i *ngIf="el.subtree" class="fa fa-fw fa-angle-down"></i>
+	</a>
+	<ul *ngIf="el.subtree" [ngClass]="{'is-hidden':!el.close}">
+		<app-menu-component [menus]="el.subtree" [menuId]="menuId" (onSelected)="onSelected.emit($event)"></app-menu-component>
+	</ul>
+</li>

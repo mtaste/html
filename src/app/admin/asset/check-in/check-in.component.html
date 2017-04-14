@@ -1,0 +1,9 @@
+<app-list-form-component 
+	[status]="status" 
+	[list]="listModel" 
+	[title]="'资产登记列表'" 
+	[form]='form'
+	(initEvent)="InitListForm($event)"
+	(rowSeleted)='RowSeleted($event)'>
+
+</app-list-form-component>

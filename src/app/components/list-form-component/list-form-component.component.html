@@ -1,0 +1,49 @@
+<p-growl [value]="msgs" [life]="1000"></p-growl>
+<p-confirmDialog icon="fa fa-question-circle" width="360"></p-confirmDialog>
+<!--列表-->
+<div class="ui-g" [ngClass]="{'is-hidden':step!=1}">
+
+	<div class="ui-g-12 ui-md-12 ui-lg-12">
+		<app-list-component [status]='status' [title]='title' [menus]='menus' [list]='list' [obj]='this' (initEvent)='ListInit($event)' (selectEvent)='SelectedRow($event)'></app-list-component>
+	</div>
+</div>
+
+<!--单据信息-->
+<div class="ui-g" [ngClass]="{'is-hidden':step!=2}">
+	<div class="ui-g-12 ui-md-12 ui-lg-12">
+		<p-fieldset legend="表单信息">
+			<!-- 功能-->
+			<p-menubar [model]="infoFuncs"></p-menubar>
+			<app-form-component [form]='form' (save)='onSubmit($event)' (initEvent)='FormInit($event)'></app-form-component>
+		</p-fieldset>
+		<ng-content></ng-content>
+		<span [ngClass]="{'is-hidden':authData.length<=0}">
+			<p-fieldset legend="审核信息">
+				<p-dataTable [responsive]="true" [value]="authData">
+					<p-column field="userName" header="用户名"></p-column>
+					<p-column field="name" header="姓名"></p-column>
+					<p-column field="status" header="状态"></p-column>
+					<p-column field="createTime" header="审核时间"></p-column>
+					<p-column field="remark" header="备注"></p-column>
+				</p-dataTable>
+			</p-fieldset>
+		</span>
+	</div>
+</div>
+<!--  否决提示 -->
+<p-dialog header="否决提示" [(visible)]="display" modal="modal" width="360" responsive="true">
+	<div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
+		<div class="ui-grid-row">
+			<div class="ui-grid-col-4">
+				否决原因*:
+			</div>
+			<div class="ui-grid-col-8">
+				<input pInputText type="text" [(ngModel)]="remark" />
+			</div>
+		</div>
+	</div>
+	<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+		<button (click)="display=false" type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-left"><span class="ui-button-icon-left ui-c fa fa-fw fa-close"></span><span class="ui-button-text ui-c">No</span></button>
+		<button (click)="Reject()" type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-left"><span class="ui-button-icon-left ui-c fa fa-fw fa-check"></span><span class="ui-button-text ui-c">Yes</span></button>
+	</div>
+</p-dialog>

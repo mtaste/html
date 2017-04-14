@@ -1,0 +1,26 @@
+<div class="ui-g">
+	<!--基础信息-->
+	<div class="ui-g-12 ui-md-12 ui-lg-12">
+		<div class="card card-w-title">
+			<div class="ui-grid-row" *ngFor="let el of info">
+				<div class="ui-grid-col-4">
+					{{el.name}}:
+				</div>
+				<div class="ui-grid-col-6">
+					{{el.model}}
+				</div>
+			</div>
+		</div>
+		<button pButton type="button" (click)="ShowInfo()" label="修改信息"></button>
+		<button pButton type="button" (click)='ShowPassWord()' label="修改密码"></button>
+	</div>
+</div>
+<!--  修改用户信息 -->
+<p-dialog header="用户信息" [(visible)]="infoDisplay" modal="modal" width="360" responsive="true">
+	<app-form-component [form]='infoForm' (save)='onInfoSubmit($event)' (initEvent)='FormInfoInit($event)'></app-form-component>
+</p-dialog>
+
+<!--  修改密码 -->
+<p-dialog header="用户密码" [(visible)]="passWordDisplay" modal="modal" width="360" responsive="true">
+	<app-form-component [form]='passWordForm' (save)='onPassWordSubmit($event)' (initEvent)='FormPassWordInit($event)'></app-form-component>
+</p-dialog>

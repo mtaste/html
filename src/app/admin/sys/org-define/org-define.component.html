@@ -1,0 +1,162 @@
+<p-growl [value]="msgs" [life]="1000">
+</p-growl>
+<p-confirmDialog icon="fa fa-question-circle" width="425"></p-confirmDialog>
+<div class="ui-g" [ngClass]="{'is-hidden':step!=1}">
+	<!--部们信息-->
+	<div class="ui-g-12 ui-md-6 ui-lg-6">
+		<p-fieldset legend="部们信息">
+			<!-- 功能-->
+			<div class="card">
+				<p-menubar [model]="depFuns"></p-menubar>
+			</div>
+			<!--部们-->
+			<p-tree [value]="depTrees" selectionMode="single" [(selection)]="depNode" (onNodeSelect)="NodeSelect($event)">
+				<template let-node pTemplate="default">
+					<span>{{node.name}}</span>
+				</template>
+			</p-tree>
+		</p-fieldset>
+	</div>
+	<!--  新增加部门 -->
+	<p-dialog header="部门信息" [(visible)]="display" modal="modal" width="360" responsive="true">
+		<form [formGroup]="orgForm" (ngSubmit)="onSubmit(orgForm.value)">
+			<div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
+				<input pInputText type="hidden" formControlName="id" />
+				<input pInputText type="hidden" formControlName="parentId" />
+				<div class="ui-grid-row">
+					<div class="ui-grid-col-4">
+						上级部门 <span style="color: red;">*</span>
+					</div>
+					<div class="ui-grid-col-8">
+						<input pInputText type="text" formControlName="parentName" />
+					</div>
+				</div>
+				<div class="ui-grid-row">
+					<div class="ui-grid-col-4">
+						部门名称 <span style="color: red;">*</span>
+					</div>
+					<div class="ui-grid-col-8">
+						<input pInputText type="text" formControlName="name" placeholder="Required" />
+					</div>
+				</div>
+				<div class="ui-grid-row">
+					<div class="ui-grid-col-2"></div>
+					<div class="ui-grid-col-6">
+						<button pButton type="submit" label="提交" [disabled]="!orgForm.valid"></button>
+					</div>
+					<div class="ui-grid-col-4"></div>
+				</div>
+			</div>
+		</form>
+	</p-dialog>
+	<!--职务信息-->
+	<div class="ui-g-12 ui-md-6 ui-lg-6">
+		<p-fieldset legend="职务列表">
+			<div [ngClass]="{'is-hidden':!depNode}">
+				<!--end-->
+				<div class="ui-listbox-filter-container ui-g">
+					<div class="ui-g-12 ui-md-6 ui-lg-6">
+						<input pInputText type="text" [(ngModel)]="jobKeyword" placeholder="关键字" />
+						<button pButton type="button" (click)="SearchJob()" icon="fa-search"></button>
+					</div>
+				</div>
+				<!--function-->
+				<div class="card">
+					<p-menubar [model]="jobFuns"></p-menubar>
+				</div>
+				<p-dataList [value]="jobList" [paginator]="true" [rows]="5" [lazy]="true" (onLazyLoad)="LoadJobListData($event)" [totalRecords]="jobTotal">
+					<template let-e pTemplate="item">
+						<div class="ui-grid ui-grid-responsive ui-fluid jobList" (click)="JobClick(e)" [ngClass]="{'selected':e.id==selectedJob.id}">
+							{{e.name}}
+						</div>
+					</template>
+				</p-dataList>
+			</div>
+		</p-fieldset>
+	</div>
+	<!--用户信息-->
+	<div class="ui-g-12 ui-md-12 ui-lg-12">
+		<p-fieldset legend="职务人员">
+			<!--function-->
+			<div class="card" [ngClass]="{'is-hidden':!selectedJob.id}">
+				<p-menubar [model]="userFuns"></p-menubar>
+			</div>
+			<!--end-->
+			<p-dataTable [responsive]="true" [value]="userList" [(selection)]="selectedUsers" [lazy]="true" [rows]="10" [paginator]="true" [totalRecords]="userTotals" (onLazyLoad)="LoadUserData($event)">
+				<p-column [style]="{'width':'38px'}" selectionMode="multiple"></p-column>
+				<p-column field="userName" header="用户名"></p-column>
+				<p-column field="name" header="姓名"></p-column>
+				<p-column field="mobile" header="电话"></p-column>
+				<p-column field="roleName" header="职务"></p-column>
+			</p-dataTable>
+		</p-fieldset>
+	</div>
+	<!--选择用户-->
+	<p-dialog header="选择用户" [(visible)]="userDisplay" modal="modal" width="360" responsive="true">
+		<div class="ui-listbox-filter-container ui-g">
+			<div class="ui-g-12 ui-md-12 ui-lg-12">
+				<input pInputText type="text" [(ngModel)]="userKeyword" placeholder="关键字" />
+				<button pButton type="button" (click)="SearchChooseUser()" icon="fa-search"></button>
+			</div>
+		</div>
+		<p-dataTable [value]="chooseUserList" [(selection)]="chooseUsers" [lazy]="true" [rows]="10" [paginator]="true" [totalRecords]="chooseUserTotal" (onLazyLoad)="LoadChooseUserData($event)">
+			<p-column [style]="{'width':'38px'}" selectionMode="multiple"></p-column>
+			<p-column field="userName" header="用户名"></p-column>
+			<p-column field="name" header="姓名"></p-column>
+		</p-dataTable>
+		<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+			<button (click)="userDisplay=false" type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-left"><span class="ui-button-icon-left ui-c fa fa-fw fa-close"></span><span class="ui-button-text ui-c">No</span></button>
+			<button (click)="ChooseUser()" type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-left"><span class="ui-button-icon-left ui-c fa fa-fw fa-check"></span><span class="ui-button-text ui-c">Yes</span></button>
+		</div>
+	</p-dialog>
+</div>
+<!--职务信息-->
+<div class="ui-g" [ngClass]="{'is-hidden':step!=2}">
+	<div class="ui-g-12 ui-md-12 ui-lg-12">
+		<p-fieldset legend="职务信息">
+			<!--function-->
+			<div class="card">
+				<p-menubar [model]="jobInfoFuns"></p-menubar>
+			</div>
+			<div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
+				<!--end-->
+				<div class="ui-g-12 ui-md-6 ui-lg-6">
+					<form [formGroup]="jobForm">
+						<div class="ui-grid ui-grid-responsive ui-grid-pad ui-fluid" style="margin: 10px 0px">
+							<input pInputText type="hidden" formControlName="id" />
+							<input pInputText type="hidden" formControlName="deptId" />
+							<div class="ui-grid-row">
+								<div class="ui-grid-col-4">
+									上级部门<span style="color: red;">*</span>
+								</div>
+								<div class="ui-grid-col-8">
+									<input pInputText type="text" formControlName="deptName" />
+								</div>
+							</div>
+							<div class="ui-grid-row">
+								<div class="ui-grid-col-4">
+									部门名称<span style="color: red;">*</span>
+								</div>
+								<div class="ui-grid-col-8">
+									<input pInputText type="text" formControlName="name" placeholder="Required" />
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="ui-g-12 ui-md-6 ui-lg-6">
+					<p-fieldset legend="权限信息">
+						<p-tree [value]="jobAuthTrees" selectionMode="checkbox" [(selection)]="selectedJobAuthNodes">
+							<template let-node pTemplate="default">
+								<span>{{node.name}}</span>
+							</template>
+						</p-tree>
+					</p-fieldset>
+				</div>
+				<div class="ui-grid-row">
+					<button pButton type="button" label="保存" (click)="SaveDeptRoleAuth(jobForm.value)"></button>
+				</div>
+			</div>
+		</p-fieldset>
+	</div>
+</div>

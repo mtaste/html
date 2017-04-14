@@ -1,0 +1,39 @@
+<div class="wrapper" [ngClass]="{'sidebar-active-m' : appCtrl.showMenuNav}">
+	<div class="topbar clearfix">
+		<span (click)="ToggleMenu($event,'showMenuNav')" id="omega-menu-button">
+			<span class="fa fa-bars"></span>
+		</span>
+		<span class="topbar-title">{{userInfo.orgName}}</span>
+	</div>
+	<div class="sidebar">
+		<div class="nano has-scrollbar">
+			<div class="nano-content sidebar-scroll-content" tabindex="0" style="margin-right: -17px;">
+				<div class="logo">
+					<span style="color:white;font-size: 20px;">秘密圈子</span>
+				</div>
+				<div class="profile">
+					<a href="javascript:;" (click)='LoginOut()' id="profile-button">
+						<span class="username">{{userInfo.userName}}</span>
+						<i class="fa fa-fw fa-sign-out"></i>
+					</a>
+				</div>
+				<div class="menu">
+					<ul>
+						<app-menu-component [menus]="menus" (onSelected)="MenusClick($event)" [menuId]="menuId">
+						</app-menu-component>
+					</ul>
+				</div>
+			</div>
+			<div class="nano-pane" style="display: none;">
+				<div class="nano-slider" style="height: 569px; transform: translate(0px, 0px);"></div>
+			</div>
+		</div>
+	</div>
+	<div class="main">
+		<div class="loading l-pinned-top" [ngClass]="{'is-hidden':!ct.loadingRequest}">
+			<span></span>
+		</div>
+		<router-outlet></router-outlet>
+	</div>
+</div>
+<a [routerLink]="'/apps'" routerLinkActive="active">主页</a>

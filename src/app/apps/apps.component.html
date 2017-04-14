@@ -1,0 +1,12 @@
+<div [ngClass]="{'is-hidden':!appsRouterService.showMenu}">
+	<ul>
+		<li>
+			<a [routerLink]="'circle'" routerLinkActive="active">圈子</a>
+		</li>
+		<li>
+			<a [routerLink]="'community'" routerLinkActive="active">交流</a>
+		</li>
+	</ul>
+	<a href="/#/">Main</a>
+</div>
+<router-outlet></router-outlet>

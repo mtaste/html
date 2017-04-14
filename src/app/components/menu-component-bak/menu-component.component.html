@@ -1,0 +1,11 @@
+<ul class="sidenav-links">
+	<li *ngFor="let el of menus" class="sidenav-section" [ngClass]="{'is-selected':el.id==menuId}">
+		<a href="javascript:;" (click)="ToggleMenu(el)" class="nav-title">
+			{{el.name}}
+			<img *ngIf="el.subtree" src="/resources/images/icons/ic_keyboard_arrow_down_black_24px.svg " class="inline-arrow-down-svg ">
+		</a>
+		<div *ngIf="el.subtree" class="nav-ordered-lists" [ngClass]="{'is-hidden':!el.close}">
+			<app-menu-component [menus]="el.subtree" [menuId]="menuId" (onSelected)="onSelected.emit($event)"></app-menu-component>
+		</div>
+	</li>
+</ul>

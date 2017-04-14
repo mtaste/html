@@ -1,0 +1,11 @@
+<app-list-form-component 
+	[status]='status' 
+	[menus]="menus" 
+	[title]="title" 
+	[list]="list" 
+	[form]="form"
+	[paramFunc]='paramFunc'
+	(initEvent)="InitListForm($event)" 
+	(rowSeleted)='RowSeleted($event)'>
+
+</app-list-form-component>
