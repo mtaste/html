@@ -1,7 +1,8 @@
 import {
 	Router,
 	Component,
-	UtilService
+	UtilService,
+	ViewChild
 } from '../index';
 import {
 	Title
@@ -24,6 +25,8 @@ import {
 	providers: [I18nService]
 })
 export class AppComponent {
+	private PIXI = window['PIXI'];
+	@ViewChild('cs') cs;
 	//Tabs
 	private items: MenuItem[];
 	private homeMenu: MenuItem;
@@ -80,6 +83,9 @@ export class AppComponent {
 			authUrl: "",
 			authIcon: "fa fa-check"
 		}];
+
+		console.log(this.PIXI);
+
 	};
 	//点击按钮 
 	ToggleMenu(e, t) {
@@ -154,4 +160,22 @@ export class AppComponent {
 			this.router.navigateByUrl('/user/login');
 		}
 	};
+
+	ngAfterViewInit() {
+		var _PIXI = this.PIXI;
+		var app = new _PIXI.Application();
+		this.cs.nativeElement.appendChild(app.view);
+		_PIXI.loader.add('bunny', 'assets/images/bunny.jpg').load(function(loader, resources) {
+			var bunny = new _PIXI.Sprite(resources.bunny.texture);
+			bunny.x = app.renderer.width / 2;
+			bunny.y = app.renderer.height / 2;
+			bunny.anchor.x = 0.5;
+			bunny.anchor.y = 0.5;
+			app.stage.addChild(bunny);
+			app.ticker.add(function() {
+				bunny.rotation += 0.01;
+			});
+		});
+	};
+
 }
