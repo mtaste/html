@@ -22,10 +22,6 @@ export class AppsComponent implements OnInit {
 	) {
 		this.titleService.setTitle('应用商城');
 	}
-	ngOnInit() {
-		setTimeout(() => {
-			console.log(this.appsRouterService);
-		}, 5000);
-	}
+	ngOnInit() {}
 
 }

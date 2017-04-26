@@ -24,8 +24,6 @@ import appRoutes from './apps.routes';
 	],
 	declarations: [
 		AppsComponent
-	],
-	providers: [
 	]
 })
 export default class AppsModule {

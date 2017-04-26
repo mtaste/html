@@ -14,7 +14,6 @@ const routes = [{
 	component: AppsComponent,
 	children: [{
 		path: "",
-		canActivate: [AppsActivate]
 	}, {
 		path: 'circle',
 		loadChildren: 'app/apps/circle/app.module',

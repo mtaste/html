@@ -25,8 +25,6 @@ import {
 	providers: [I18nService]
 })
 export class AppComponent {
-	private PIXI = window['PIXI'];
-	@ViewChild('cs') cs;
 	//Tabs
 	private items: MenuItem[];
 	private homeMenu: MenuItem;
@@ -62,29 +60,27 @@ export class AppComponent {
 			id: "1",
 			parentId: "0",
 			name: "圈子大厅",
-			authUrl: "",
+			authUrl: "/apps/circle/hall",
 			authIcon: "fa fa-check"
 		}, {
 			id: "2",
 			parentId: "0",
 			name: "个人信息",
-			authUrl: "",
+			authUrl: "/apps/circle/info",
 			authIcon: "fa fa-check"
 		}, {
 			id: "3",
 			parentId: "0",
 			name: "个人圈子",
-			authUrl: "",
+			authUrl: "/apps/circle/personal",
 			authIcon: "fa fa-check"
 		}, {
 			id: "4",
 			parentId: "0",
 			name: "个人好友",
-			authUrl: "",
+			authUrl: "/apps/circle/friends",
 			authIcon: "fa fa-check"
 		}];
-
-		console.log(this.PIXI);
 
 	};
 	//点击按钮 
@@ -147,11 +143,10 @@ export class AppComponent {
 	//调转到对应的路由
 	GoRouter(m) {
 		//this.utilService.loadingCompont = true;
-		var u = m.authUrl + "?id=" + m.id;
+		var u = m.authUrl;
 		if(this.router.isActive(u, true)) {
 			return;
 		}
-		this.utilService.loadingCompont = true;
 		this.router.navigateByUrl(u);
 	};
 	//退出
@@ -162,20 +157,7 @@ export class AppComponent {
 	};
 
 	ngAfterViewInit() {
-		var _PIXI = this.PIXI;
-		var app = new _PIXI.Application();
-		this.cs.nativeElement.appendChild(app.view);
-		_PIXI.loader.add('bunny', 'assets/images/bunny.jpg').load(function(loader, resources) {
-			var bunny = new _PIXI.Sprite(resources.bunny.texture);
-			bunny.x = app.renderer.width / 2;
-			bunny.y = app.renderer.height / 2;
-			bunny.anchor.x = 0.5;
-			bunny.anchor.y = 0.5;
-			app.stage.addChild(bunny);
-			app.ticker.add(function() {
-				bunny.rotation += 0.01;
-			});
-		});
+
 	};
 
 }
